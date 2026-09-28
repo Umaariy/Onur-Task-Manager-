@@ -1,0 +1,1 @@
+export default function NotFound() { return <div className="modal-backdrop"><section className="modal"><div className="eyebrow">404</div><h1>Sahifa topilmadi</h1><p className="inline-note">Havolani tekshiring yoki ish maydoniga qayting.</p><a className="button" href="/">Ish maydoniga qaytish</a></section></div>; }

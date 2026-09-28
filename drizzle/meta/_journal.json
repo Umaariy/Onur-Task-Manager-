@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1789223186201,
+      "tag": "0000_clever_warstar",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1790340000000,
+      "tag": "0001_otm_accounts",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1790340001000,
+      "tag": "0002_password_resets",
+      "breakpoints": true
+    }
+  ]
+}
