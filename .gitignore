@@ -47,12 +47,10 @@ next-env.d.ts
 /.codex/
 /outputs/
 /work/
-# Generated bundles, local previews, and handoff render scratch files.
-/build/
+# Local previews and handoff render scratch files.
 /tmp/
 /output/
 /reports/
-/.openai/
 # Local database copies and setup credentials must stay on this computer.
 *.sqlite
 *.sqlite-*

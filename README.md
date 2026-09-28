@@ -4,7 +4,7 @@ Kanban asosidagi vazifalar platformasi. Uch til (o‘zbek lotin, o‘zbek kirill
 
 ## Mahalliy ishga tushirish
 
-Node.js 22.13+ talab qilinadi. Loyiha `source` papkasida:
+Node.js 22.13+ talab qilinadi. GitHub’dan nusxa olgach, buyruqlarni loyiha ildizida bajaring:
 
 ```sh
 npm ci
