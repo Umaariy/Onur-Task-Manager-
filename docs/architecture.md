@@ -4,7 +4,7 @@ Ushbu nashr — T.Z. asosidagi ishlaydigan dastlabki web ilova. T.Z.dagi barcha 
 
 Frontend React/TypeScript va Vinext orqali ishlaydi. Barcha yozishlar `/api/v1/actions` yoki fayl endpointlariga boradi. Server har bir so‘rovda shaxsni, faol workspace a’zoligini, bazadagi rolni, doska va kartochka ACL’ini qayta tekshiradi. UI tugmalari qo‘shimcha qulaylik; xavfsizlik chegarasi emas.
 
-Server versiyasida (`server` branch) Cloudflare D1/R2 o‘rniga `lib/platform.ts` ishlatiladi: Node.js ichidagi SQLite (`node:sqlite`, D1 bilan bir xil `prepare/bind/first/all/run/batch` interfeysi, `batch` bitta tranzaksiyada) va disk papkasi (R2 `put/get/delete`). Reverse proxy (Caddy) ortida haqiqiy IP `X-Forwarded-For` dan, tashqi origin `X-Forwarded-Proto/Host` yoki `OTM_PUBLIC_URL` dan olinadi. T.Z.da tavsiya etilgan PostgreSQL/Redis/MinIO, JWT va Docker Compose stacki ushbu nashrga tatbiq qilinmagan. Cloudflare server joylashuvi O‘zbekistonda ekaniga kafolat berilmaydi. Mahalliylashtirish va ishlab chiqarish infratuzilmasi buyurtmachi bilan kelishilishi kerak; bu hujjat huquqiy muvofiqlik xulosasi emas.
+Cloudflare D1/R2 o‘rniga `lib/platform.ts` ishlatiladi: Node.js ichidagi SQLite (`node:sqlite`, D1 bilan bir xil `prepare/bind/first/all/run/batch` interfeysi, `batch` bitta tranzaksiyada) va disk papkasi (R2 `put/get/delete`). Reverse proxy (Caddy) ortida haqiqiy IP `X-Forwarded-For` dan, tashqi origin `X-Forwarded-Proto/Host` yoki `OTM_PUBLIC_URL` dan olinadi. T.Z.da tavsiya etilgan PostgreSQL/Redis/MinIO, JWT va Docker Compose stacki ushbu nashrga tatbiq qilinmagan. Ma’lumotlar kompaniyaning o‘z serverida saqlanadi; bu hujjat huquqiy muvofiqlik xulosasi emas.
 
 ```mermaid
 erDiagram

@@ -46,7 +46,7 @@ Disk boshqa bo‘lsa (masalan `E:`), hamma joyda `D:` ni almashtiring.
 ```powershell
 mkdir D:\OnurTasks
 cd D:\OnurTasks
-git clone -b server https://github.com/Umaariy/Onur-Task-Manager-.git app
+git clone https://github.com/Umaariy/Onur-Task-Manager-.git app
 cd app
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts\windows-server\install.ps1
 ```
