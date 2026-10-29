@@ -1,4 +1,4 @@
-import { env } from 'cloudflare:workers';
+import { env, type PreparedStatement } from '@/lib/platform';
 import { csrf, db, errorResponse, response } from '@/lib/server';
 import { fail } from '@/lib/actions';
 import { initialState } from '@/lib/model';
@@ -29,7 +29,7 @@ export async function POST(req: Request) {
         const id = crypto.randomUUID();
         const now = new Date().toISOString();
         const encoded = await passwordHash(body.password);
-        const queries: D1PreparedStatement[] = [db().prepare('INSERT INTO accounts (id,email,password_hash,active,platform_admin,created_at) VALUES (?,?,?,1,1,?)').bind(id, email, encoded, now)];
+        const queries: PreparedStatement[] = [db().prepare('INSERT INTO accounts (id,email,password_hash,active,platform_admin,created_at) VALUES (?,?,?,1,1,?)').bind(id, email, encoded, now)];
         if (oldId) {
             const rows = await db().prepare('SELECT id,owner,state FROM workspaces').all<{ id: string; owner: string; state: string }>();
             for (const row of rows.results) {

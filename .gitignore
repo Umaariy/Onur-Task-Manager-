@@ -55,3 +55,8 @@ next-env.d.ts
 *.sqlite
 *.sqlite-*
 setup-key.txt
+
+# Server data (database, uploaded files, backups, config)
+/data/
+/backups/
+otm.env

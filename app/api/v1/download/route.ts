@@ -1,4 +1,4 @@
-import { env } from 'cloudflare:workers';
+import { env } from '@/lib/platform';
 import { db, hash, loadWorkspace, errorResponse } from '@/lib/server';
 import { fail } from '@/lib/actions';
 import { can } from '@/lib/model';

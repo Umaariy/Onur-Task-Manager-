@@ -2,22 +2,21 @@
 
 Kanban asosidagi vazifalar platformasi. Uch til (o‘zbek lotin, o‘zbek kirill, rus), ish maydonlari, rollar, fayllar, hisobotlar hamda admin tomonidan boshqariladigan email/parol kirishi mavjud.
 
-## Mahalliy ishga tushirish
+## Ishga tushirish
 
-Node.js 22.13+ talab qilinadi. GitHub’dan nusxa olgach, buyruqlarni loyiha ildizida bajaring:
+Node.js 22.13+ talab qilinadi. Baza — bitta SQLite fayl (Node.js ichidagi `node:sqlite`), fayllar — disk papkasi. Cloudflare, alohida SQL server yoki Docker kerak emas.
 
 ```sh
 npm ci
-npm run build
-node --import ./scripts/sites-env.mjs node_modules/wrangler/bin/wrangler.js d1 execute DB --local --config dist/server/wrangler.json --persist-to .wrangler/state --file drizzle/0000_clever_warstar.sql
-node --import ./scripts/sites-env.mjs node_modules/wrangler/bin/wrangler.js d1 execute DB --local --config dist/server/wrangler.json --persist-to .wrangler/state --file drizzle/0001_otm_accounts.sql
-node --import ./scripts/sites-env.mjs node_modules/wrangler/bin/wrangler.js d1 execute DB --local --config dist/server/wrangler.json --persist-to .wrangler/state --file drizzle/0002_password_resets.sql
-npm run dev
+npm run build      # .next/standalone ga server build
+npm start          # http://127.0.0.1:5181
 ```
 
-Migratsiyalarni **faqat hali qo‘llanmagan bazada** ketma-ket bajaring. Mavjud baza uchun birinchi fayl ilgari qo‘llangan bo‘lsa, faqat `0001` va `0002` kerak. `npm run dev` manzili `http://127.0.0.1:5173/`.
+Ishlab chiqishda: `npm run dev` (ma’lumotlar loyiha ichidagi `data/` da). `npm start` da ma’lumotlar loyihadan bir papka yuqoridagi `data/` ga yoziladi; `OTM_DATA_DIR` bilan o‘zgartiriladi. Birinchi ishga tushishda `data/setup-key.txt` yaratiladi — `/setup` sahifasida shu kalit bilan birinchi Owner hisobi ochiladi. Migratsiyalar (`drizzle/*.sql`) server ishga tushganda avtomatik qo‘llanadi.
 
-Loyiha ildizida Git’ga kirmaydigan `.dev.vars` fayl yarating. Unda `OTM_SETUP_SECRET=` dan keyin kamida 32 baytli tasodifiy qiymat bo‘lsin. Bu parolni eslatadigan so‘z emas, birinchi Owner hisobiga ruxsat beruvchi maxfiy kalit. Birinchi Owner hisobini `/setup` sahifasida shu kalit, o‘zingiz tanlagan email va kamida 8 belgili parol bilan yarating. Ilgari yaratilgan bitta Owner ish maydoni va vazifalari yangi hisobga ko‘chadi. Keyingi tashriflar `/login` sahifasiga yo‘naltiriladi.
+**Windows serverga o‘rnatish (domen, HTTPS, avtoyuklash, zaxira): [docs/server-ornatish.md](docs/server-ornatish.md)**
+
+Sozlamalar (`otm.env` yoki muhit o‘zgaruvchilari): `OTM_PUBLIC_URL`, `PORT`, `HOSTNAME`, `OTM_DATA_DIR`, `OTM_BACKUP_DIR`, `OTM_BACKUP_KEEP_DAYS`, `OTM_SETUP_SECRET`, `OTM_TRUST_PROXY` — namuna: `scripts/windows-server/otm.env.example`.
 
 ## Foydalanuvchilar
 
@@ -26,22 +25,22 @@ Platforma administratori avval **Sozlamalar → Doska rollari va huquqlar** bo�
 ## Tekshirish
 
 ```sh
-node --test tests/permissions.test.mjs tests/auth.test.mjs
+npm test                 # huquqlar va parol testlari
 npx tsc --noEmit
 npm run build
+# To‘liq server sinovi (yangi bo‘sh data papkasi bilan ishlayotgan serverga):
+OTM_TEST_URL=http://127.0.0.1:5181 OTM_SETUP_SECRET=<kalit> node --test tests/server.smoke.mjs
 ```
-
-Mahalliy API sinovlari alohida baza bilan bajarilsin; ular ma’lumot yozadi.
 
 ## Hujjatlar
 
 - [Foydalanuvchi qo‘llanmasi](docs/user-guide-uz.md)
-- [O‘rnatish, nashr, backup](docs/deployment.md)
+- [Windows serverga o‘rnatish](docs/server-ornatish.md)
+- [Boshqaruv va tiklash](docs/deployment.md)
 - [Arxitektura](docs/architecture.md)
 - [Qamrov va cheklovlar](docs/coverage.md)
 - [OpenAPI](docs/openapi.json)
-- [Windows o‘rnatgichi](docs/windows-installer.md)
 - [Dasturchilar uchun tizim xaritasi](docs/dasturchilar-uchun-tizim-xaritasi.md)
 - [Dasturchilar uchun tizim xaritasi (PDF)](docs/ONUR-Task-Manager-tizim-xaritasi.pdf)
 
-Hozirgi lokal preview internetga nashr qilinmagan. Nashrdan avval production D1/R2 binding, HTTPS, migratsiyalar, maxfiy setup kaliti va backup sozlamalarini tekshiring.
+Nashrdan avval: HTTPS (Caddy), `OTM_PUBLIC_URL`, 80/443 portlar va kunlik zaxira — [docs/server-ornatish.md](docs/server-ornatish.md).

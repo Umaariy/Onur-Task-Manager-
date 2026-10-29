@@ -1,4 +1,5 @@
 import { csrf, db, errorResponse, response } from '@/lib/server';
+import { clientIp } from '@/lib/platform';
 import { fail } from '@/lib/actions';
 import { issueSession, passwordHash, sessionCookie, validPassword, verifyPassword } from '@/lib/auth';
 
@@ -11,7 +12,7 @@ export async function POST(req: Request) {
         const password = body.password;
         if (!email || email.length > 254 || !validPassword(password)) fail(401, 'INVALID_LOGIN', 'Login yoki parol noto‘g‘ri');
         const window = Math.floor(Date.now() / 900000);
-        const address = req.headers.get('CF-Connecting-IP') ?? 'unknown';
+        const address = clientIp(req);
         const counts = await db().batch([
             db().prepare('INSERT INTO rate_windows (key,count,expires_at) VALUES (?,1,?) ON CONFLICT(key) DO UPDATE SET count=count+1 RETURNING count').bind('login-email:' + email + ':' + window, (window + 1) * 900000),
             db().prepare('INSERT INTO rate_windows (key,count,expires_at) VALUES (?,1,?) ON CONFLICT(key) DO UPDATE SET count=count+1 RETURNING count').bind('login-ip:' + address + ':' + window, (window + 1) * 900000)

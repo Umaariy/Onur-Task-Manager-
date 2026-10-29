@@ -1,4 +1,4 @@
-import { env } from 'cloudflare:workers';
+import { env, isHttps, type Database } from '@/lib/platform';
 import { cookies } from 'next/headers';
 import { passwordHash, validPassword, verifyPassword } from './password';
 
@@ -20,11 +20,11 @@ export async function currentUser(): Promise<AuthUser | null> {
 }
 
 export function sessionCookie(req: Request, token: string, age = SESSION_AGE) {
-    const secure = new URL(req.url).protocol === 'https:';
+    const secure = isHttps(req);
     return `${SESSION_COOKIE}=${token}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${age}${secure ? '; Secure' : ''}`;
 }
 
-export async function issueSession(database: D1Database, userId: string) {
+export async function issueSession(database: Database, userId: string) {
     const token = Array.from(crypto.getRandomValues(new Uint8Array(32)), byte => byte.toString(16).padStart(2, '0')).join('');
     await database.prepare('INSERT INTO sessions (token_hash,user_id,expires_at,created_at) VALUES (?,?,?,?)').bind(await sha256(token), userId, Date.now() + SESSION_AGE * 1000, new Date().toISOString()).run();
     return token;

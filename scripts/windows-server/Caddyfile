@@ -1,0 +1,19 @@
+# Caddy: HTTPS front door for ONUR Task Manager.
+# Put this file next to caddy.exe (D:\OnurTasks\caddy\Caddyfile) and replace the domain.
+# Caddy obtains and renews the HTTPS certificate automatically (ports 80 and 443 must be open).
+# It also passes X-Forwarded-For / -Proto / -Host to the app, which the app uses for
+# the real client IP (login limits) and the https origin (security checks).
+
+tasks.onur.uz {
+	encode gzip
+	request_body {
+		max_size 12MB
+	}
+	reverse_proxy 127.0.0.1:5181
+	log {
+		output file D:/OnurTasks/logs/caddy-access.log {
+			roll_size 20MiB
+			roll_keep 10
+		}
+	}
+}
