@@ -452,3 +452,137 @@ body, .dark body {
 .app-a .calendar-panel, .app-a .table-wrap, .app-a .filter-panel, .app-a .modal {
   -webkit-backdrop-filter: none; backdrop-filter: none;
 }
+
+/* =====================================================================
+   v2 — glass controls, frosted (matte) surfaces, calmer view changes
+   ===================================================================== */
+:root {
+  --g-fill: rgba(255, 255, 255, 0.5);
+  --g-line: rgba(255, 255, 255, 0.85);
+  --g-hi: inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  --g-shadow: 0 10px 28px -14px rgba(28, 29, 26, 0.24);
+  --g-blur: blur(18px) saturate(160%);
+  --g-surface: linear-gradient(160deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.5));
+  --g-lane: linear-gradient(180deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.28));
+  --g-card: linear-gradient(180deg, rgba(255, 255, 255, 0.97), rgba(255, 255, 255, 0.84));
+  --g-dark: linear-gradient(180deg, #3a3b35 0%, #1c1d1a 100%);
+  /* fine grain that gives frosted surfaces a matte feel */
+  --g-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .06 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.dark {
+  --g-fill: rgba(255, 255, 255, 0.06);
+  --g-line: rgba(255, 255, 255, 0.11);
+  --g-hi: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  --g-shadow: 0 12px 30px -14px rgba(0, 0, 0, 0.75);
+  --g-surface: linear-gradient(160deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+  --g-lane: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  --g-card: linear-gradient(180deg, #2c2d28, #23241f);
+  --g-dark: linear-gradient(180deg, #f6f4ee 0%, #dedbd2 100%);
+}
+
+/* Ambient glow behind the glass, so the blur has something to soften */
+.app-a .shell { position: relative; overflow: hidden; isolation: isolate; background:
+  radial-gradient(900px 600px at 85% 100%, rgba(87, 208, 127, 0.16), transparent 70%),
+  linear-gradient(140deg, var(--a-shell) 0%, var(--a-shell) 55%, var(--a-shell-2) 100%); }
+.app-a .shell::before, .app-a .shell::after { content: ""; position: absolute; z-index: -1; border-radius: 50%; filter: blur(70px); pointer-events: none; }
+.app-a .shell::before { width: 640px; height: 640px; right: -180px; top: -260px; background: radial-gradient(circle, rgba(87, 208, 127, 0.42), transparent 66%); animation: glow 16s ease-in-out infinite alternate; }
+.app-a .shell::after { width: 560px; height: 560px; left: -200px; top: 480px; background: radial-gradient(circle, rgba(232, 195, 90, 0.28), transparent 66%); animation: glow 20s ease-in-out infinite alternate-reverse; }
+.dark .app-a .shell::before { background: radial-gradient(circle, rgba(87, 208, 127, 0.28), transparent 66%); }
+.dark .app-a .shell::after { background: radial-gradient(circle, rgba(87, 208, 127, 0.12), transparent 66%); }
+@keyframes glow { to { transform: translate(70px, 90px) scale(1.12); } }
+
+/* Logo: full ONUR wordmark on a light glass pill (readable in both themes) */
+.app-a .brand-pill { background: rgba(255, 255, 255, 0.7); border: 1px solid var(--g-line); box-shadow: var(--g-hi), var(--g-shadow); backdrop-filter: var(--g-blur); -webkit-backdrop-filter: var(--g-blur); padding: 9px 18px; gap: 10px; color: #1c1d1a; }
+.dark .app-a .brand-pill { background: #f3f1ea; border-color: #f3f1ea; }
+.app-a .brand-pill img { width: auto; height: 22px; background: none; padding: 0; border-radius: 0; }
+.app-a .brand-pill span { font-weight: 300; font-size: 18px; border-left: 1px solid rgba(28, 29, 26, 0.18); padding-left: 10px; }
+
+/* Glass controls */
+.app-a .pill-tabs, .app-a .search-pill, .app-a .round-button, .app-a .button.secondary, .app-a .filter-button,
+.app-a .board-strip button, .app-a .language-menu .language-trigger, .app-a .user-pop, .app-a .demo-banner {
+  background: var(--g-fill); border: 1px solid var(--g-line); box-shadow: var(--g-hi), var(--g-shadow);
+  -webkit-backdrop-filter: var(--g-blur); backdrop-filter: var(--g-blur);
+}
+.app-a .user-pop { background: rgba(255, 255, 255, 0.78); }
+.dark .app-a .user-pop { background: rgba(35, 36, 31, 0.86); }
+.app-a .round-button:hover, .app-a .button.secondary:hover, .app-a .filter-button:hover, .app-a .board-strip button:hover {
+  background: rgba(255, 255, 255, 0.8); color: var(--a-ink); border-color: #fff; transform: translateY(-2px);
+  box-shadow: var(--g-hi), 0 14px 30px -14px rgba(28, 29, 26, 0.32);
+}
+.dark .app-a .round-button:hover, .dark .app-a .button.secondary:hover, .dark .app-a .filter-button:hover, .dark .app-a .board-strip button:hover { background: rgba(255, 255, 255, 0.12); border-color: rgba(255, 255, 255, 0.2); }
+.app-a .pill-indicator, .app-a .board-strip button.active, .app-a .filter-button.filtered, .app-a .user-trigger, .app-a .column-count {
+  background: var(--g-dark); border-color: transparent;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22), 0 8px 18px -8px rgba(0, 0, 0, 0.55);
+}
+.app-a .board-strip button.active, .app-a .filter-button.filtered { color: #fff; }
+.dark .app-a .board-strip button.active, .dark .app-a .filter-button.filtered { color: #1c1d1a; }
+.dark .app-a .pill-tabs button.active, .dark .app-a .column-count { color: #1c1d1a; }
+
+/* Glossy primary button with a soft glow */
+.app-a .button {
+  background: linear-gradient(180deg, #74e39a 0%, #4fc977 55%, #3db765 100%); color: #0b3018;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65), inset 0 -3px 8px rgba(15, 61, 32, 0.16), 0 10px 26px -10px rgba(40, 170, 90, 0.8);
+}
+.app-a .button:hover { background: linear-gradient(180deg, #7ee9a3 0%, #55d07e 55%, #40bd69 100%); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), inset 0 -3px 8px rgba(15, 61, 32, 0.16), 0 16px 34px -10px rgba(40, 170, 90, 0.95); }
+.app-a .button.danger-bg { background: linear-gradient(180deg, #e2735f, #bf4a35) !important; color: #fff; }
+
+/* Frosted, matte surfaces */
+.app-a .widget, .app-a .panel, .app-a .board-tile, .app-a .calendar-panel, .app-a .table-wrap, .app-a .filter-panel,
+.dark .app-a .panel, .dark .app-a .board-tile, .dark .app-a .calendar-panel, .dark .app-a .table-wrap {
+  background: var(--g-grain), var(--g-surface); border: 1px solid var(--g-line);
+  box-shadow: var(--g-hi), 0 20px 44px -26px rgba(28, 29, 26, 0.3);
+  -webkit-backdrop-filter: blur(26px) saturate(150%); backdrop-filter: blur(26px) saturate(150%);
+}
+/* lanes stay without blur: blur would trap a dragged card under the next lane */
+.app-a .column, .dark .app-a .column { background: var(--g-grain), var(--g-lane); border: 1px solid var(--g-line); box-shadow: var(--g-hi); }
+.app-a .column.drop-target { background: var(--a-green-soft); }
+.app-a .task-card, .dark .app-a .task-card { background: var(--g-card); border: 1px solid var(--g-line); box-shadow: var(--g-hi), 0 6px 16px -10px rgba(28, 29, 26, 0.28); }
+.app-a .task-card.is-overdue { border-color: #f2c4bb; }
+.app-a .add-card, .app-a .add-column { background: transparent; }
+.app-a .add-card:hover { background: var(--g-fill); }
+
+/* Dashboard accents */
+.app-a .seg-ink { background: var(--g-dark); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 10px 20px -12px rgba(0, 0, 0, 0.6); color: #fff; }
+.dark .app-a .seg-ink { color: #1c1d1a; }
+.app-a .seg-green { background: linear-gradient(180deg, #74e39a, #45c26f); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 10px 22px -12px rgba(40, 170, 90, 0.8); }
+.app-a .seg-outline, .app-a .seg-hatch { background-color: var(--g-fill); -webkit-backdrop-filter: var(--g-blur); backdrop-filter: var(--g-blur); }
+.app-a .dark-widget, .dark .app-a .dark-widget {
+  color: #eef3ec; border: 1px solid rgba(255, 255, 255, 0.08);
+  background: radial-gradient(120% 90% at 85% -10%, rgba(87, 208, 127, 0.38), transparent 60%), var(--g-grain), linear-gradient(160deg, #1d2a21 0%, #0e130f 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 26px 50px -26px rgba(15, 61, 32, 0.75);
+}
+.app-a .dark-widget li button { background: rgba(255, 255, 255, 0.035); border: 1px solid rgba(255, 255, 255, 0.06); margin-bottom: 4px; }
+.app-a .dark-widget li button:hover { background: rgba(255, 255, 255, 0.09); border-color: rgba(127, 224, 160, 0.3); }
+.app-a .dark-widget .avatar { border-color: transparent; }
+
+/* Modals: frosted glass; the task card rises from below into the centre */
+.app-a .modal, .dark .app-a .modal {
+  background: var(--g-grain), linear-gradient(160deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.78));
+  border: 1px solid var(--g-line); box-shadow: var(--g-hi), 0 40px 90px -30px rgba(28, 29, 26, 0.45);
+  -webkit-backdrop-filter: blur(30px) saturate(160%); backdrop-filter: blur(30px) saturate(160%);
+}
+.dark .app-a .modal { background: var(--g-grain), linear-gradient(160deg, rgba(44, 45, 40, 0.94), rgba(30, 31, 27, 0.9)); }
+.app-a .modal-backdrop { background: rgba(28, 29, 26, 0.28); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+.app-a .sheet-backdrop { align-items: center; justify-content: center; }
+.app-a .modal.card-sheet { width: min(860px, 100%); max-height: min(90dvh, 920px); animation: sheet-rise 0.55s var(--a-ease) both; }
+@keyframes sheet-rise { 0% { opacity: 0; transform: translateY(90px) scale(0.97); } 60% { opacity: 1; } 100% { opacity: 1; transform: none; } }
+.app-a .modal.card-sheet .modal-body > * { animation: rise 0.5s var(--a-ease) backwards; }
+.app-a .modal.card-sheet .modal-body > *:nth-child(-n+3) { animation-delay: 0.12s; }
+.app-a .modal.card-sheet .modal-body > *:nth-child(n+4) { animation-delay: 0.2s; }
+.app-a .toast { background: rgba(28, 29, 26, 0.86); -webkit-backdrop-filter: var(--g-blur); backdrop-filter: var(--g-blur); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 16px 40px -16px rgba(0, 0, 0, 0.6); }
+
+/* View changes: the page fades once; inside a board only the content crossfades */
+.app-a .view-enter > *, .app-a .column { animation: none; }
+.app-a .view-enter { animation: page-in 0.45s var(--a-ease) backwards; }
+.app-a .view-body { animation: body-in 0.4s var(--a-ease) backwards; }
+@keyframes page-in { from { opacity: 0; transform: translateY(10px); } }
+@keyframes body-in { from { opacity: 0; transform: translateY(6px) scale(0.995); } }
+
+@media (max-width: 760px) {
+  .app-a .brand-pill span { display: none; }
+  .app-a .modal.card-sheet { max-height: calc(100dvh - 20px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .app-a .shell::before, .app-a .shell::after { animation: none; }
+}
