@@ -348,3 +348,39 @@ html[data-design="b"] body {
 }
 .dark .app-b .task-card:hover::before { opacity: 0.3; }
 .dark .app-b .task-card:hover { border-color: var(--b-line-strong); }
+
+/* ---------- v2: closer to the reference ---------- */
+.app-b .b-board-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+.app-b .b-board-head h1 { font-size: 21px; font-weight: 600; }
+.app-b .b-board-head p { font-size: 13px; color: var(--b-muted); margin-top: 3px; }
+.app-b .b-head-actions { display: flex; align-items: center; gap: 14px; }
+.app-b .b-head-actions .avatar { width: 30px; height: 30px; font-size: 10.5px; }
+.app-b .b-head-actions .avatar-stack .avatar + .avatar { margin-left: -9px; }
+.app-b .b-invite { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--b-ink); padding: 6px 4px; border-radius: 8px; }
+.app-b .b-invite svg { width: 18px; height: 18px; padding: 3px; border-radius: 999px; background: var(--b-ink); color: var(--b-panel); }
+.app-b .b-invite:hover { color: var(--b-accent-text); }
+.app-b .b-invite:hover svg { background: var(--b-accent); }
+
+.app-b .board-toolbar { margin-top: 14px; align-items: center; border-bottom: 1px solid var(--b-line); }
+.app-b .board-toolbar .pill-tabs { border-bottom: 0; }
+.app-b .private-label { display: none; }
+.app-b .toolbar-actions .button { min-height: 32px; padding: 0 12px; font-size: 12.5px; }
+.app-b .toolbar-actions .filter-button { height: 32px; font-size: 12.5px; }
+.app-b .kanban { margin-top: 18px; }
+.app-b .column-title { gap: 6px; }
+.app-b .column-dot, .app-b .column-grip { display: none; }
+.app-b .column-count { margin-left: 2px; }
+.app-b .column-title .icon-button { opacity: 0; transition: opacity 0.2s; }
+.app-b .column:hover .column-title .icon-button { opacity: 1; }
+
+/* My tasks grid */
+.app-b .b-mytasks { display: flex; flex-direction: column; gap: 6px; }
+.app-b .b-mytasks header h1 { font-size: 21px; }
+.app-b .b-mytasks header p { font-size: 13px; color: var(--b-muted); margin-top: 2px; }
+.app-b .b-mytasks .pill-tabs { margin: 10px 0 18px; }
+.app-b .b-task-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+.app-b .b-grid-card { text-align: left; width: 100%; display: block; cursor: pointer; }
+.app-b .tc-chips { display: flex; gap: 6px; }
+.app-b .status-chip { font-size: 11.5px; font-weight: 500; padding: 3px 9px; border-radius: 999px; white-space: nowrap; }
+.app-b .tc-desc { font-size: 12.5px; color: var(--b-muted); margin: -6px 0 12px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; }
+.app-b .page-footer { display: none; }
