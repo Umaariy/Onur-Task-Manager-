@@ -9,5 +9,5 @@ export default async function Home() {
         const row = await db().prepare('SELECT COUNT(*) AS count FROM accounts').first<{ count: number }>();
         redirect(row?.count ? '/login' : '/setup');
     }
-    return <KanbanApp />;
+    return <KanbanApp design={process.env.OTM_DESIGN === 'b' ? 'b' : 'a'} />;
 }

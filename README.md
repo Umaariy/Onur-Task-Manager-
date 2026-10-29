@@ -12,7 +12,7 @@ npm run build      # .next/standalone ga server build
 npm start          # http://127.0.0.1:5181
 ```
 
-Ishlab chiqishda: `npm run dev` (ma’lumotlar loyiha ichidagi `data/` da). `npm start` da ma’lumotlar loyihadan bir papka yuqoridagi `data/` ga yoziladi; `OTM_DATA_DIR` bilan o‘zgartiriladi. Birinchi ishga tushishda `data/setup-key.txt` yaratiladi — `/setup` sahifasida shu kalit bilan birinchi Owner hisobi ochiladi. Migratsiyalar (`drizzle/*.sql`) server ishga tushganda avtomatik qo‘llanadi.
+Ishlab chiqishda: `npm run dev` — A dizayni, http://localhost:5181; `npm run dev:b` — B dizayni, http://localhost:5182 (ikkalasini ikki oynada yonma-yon ishga tushirish mumkin, ma’lumotlar umumiy). Ma’lumotlar loyiha ichidagi `data/` da). `npm start` da ma’lumotlar loyihadan bir papka yuqoridagi `data/` ga yoziladi; `OTM_DATA_DIR` bilan o‘zgartiriladi. Birinchi ishga tushishda `data/setup-key.txt` yaratiladi — `/setup` sahifasida shu kalit bilan birinchi Owner hisobi ochiladi. Migratsiyalar (`drizzle/*.sql`) server ishga tushganda avtomatik qo‘llanadi.
 
 **Windows serverga o‘rnatish (domen, HTTPS, avtoyuklash, zaxira): [docs/server-ornatish.md](docs/server-ornatish.md)**
 
