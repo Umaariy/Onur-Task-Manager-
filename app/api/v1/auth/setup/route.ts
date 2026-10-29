@@ -8,7 +8,10 @@ import { issueSession, passwordHash, sessionCookie, validPassword } from '@/lib/
 export async function GET() {
     try {
         const row = await db().prepare('SELECT COUNT(*) AS count FROM accounts').first<{ count: number }>();
-        return response({ setupRequired: !row?.count });
+        const setupRequired = !row?.count;
+        // Create data/setup-key.txt as soon as the setup page is opened, so the Owner can read it.
+        if (setupRequired) void env.OTM_SETUP_SECRET;
+        return response({ setupRequired });
     } catch (error) { return errorResponse(error); }
 }
 
