@@ -586,3 +586,135 @@ body, .dark body {
 @media (prefers-reduced-motion: reduce) {
   .app-a .shell::before, .app-a .shell::after { animation: none; }
 }
+
+/* =====================================================================
+   v3 — phones and tablets
+   ===================================================================== */
+.app-a .tabbar { display: none; }
+
+/* Touch screens: no hover lift (it sticks after a tap) */
+@media (hover: none) {
+  .app-a .task-card:hover, .app-a .widget:hover, .app-a .board-tile:hover, .app-a .button:hover,
+  .app-a .round-button:hover, .app-a .board-strip button:hover, .app-a .button.secondary:hover { transform: none; }
+  .app-a .task-card:active { transform: scale(0.985); transition-duration: 0.1s; }
+  .app-a .column-title .icon-button, .app-a .icon-button { min-width: 40px; min-height: 40px; }
+}
+
+/* Tablets (portrait and small landscape) */
+@media (min-width: 761px) and (max-width: 1100px) {
+  .app-a { padding: 14px; }
+  .app-a .content { padding: 4px 24px 22px; }
+  .app-a .topnav { padding: 18px 24px 14px; }
+  .app-a .dash-widgets { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .app-a .dash-widgets > .dark-widget { grid-column: 1 / -1; }
+  .app-a .dash-numbers strong { font-size: 52px; }
+  .app-a .kanban { scroll-snap-type: x proximity; }
+  .app-a .column { flex: 0 0 300px; scroll-snap-align: start; }
+  .app-a .board-section-title { width: 100%; }
+  .app-a .modal.card-sheet { width: min(760px, 100%); }
+}
+
+/* Phones */
+@media (max-width: 760px) {
+  .app-a { padding: 0; }
+  .app-a .shell { border-radius: 0; border: 0; min-height: 100vh; min-height: 100dvh; }
+  .app-a .topnav {
+    position: sticky; top: 0; z-index: 30; padding: calc(10px + env(safe-area-inset-top)) 14px 10px;
+    background: rgba(247, 245, 239, 0.78); -webkit-backdrop-filter: blur(18px) saturate(160%); backdrop-filter: blur(18px) saturate(160%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.7); flex-wrap: nowrap;
+  }
+  .dark .app-a .topnav { background: rgba(26, 27, 24, 0.8); border-bottom-color: var(--a-line); }
+  .app-a .main-nav { display: none; }
+  .app-a .brand-pill { padding: 7px 14px; }
+  .app-a .brand-pill img { height: 19px; }
+  .app-a .top-tools { gap: 6px; }
+  .app-a .round-button, .app-a .user-trigger, .app-a .search-pill { width: 42px; height: 42px; }
+  .app-a .search-pill:focus-within { position: absolute; left: 14px; right: 14px; width: auto; z-index: 2; }
+  .app-a .user-pop { position: fixed; top: auto; bottom: calc(76px + env(safe-area-inset-bottom)); left: 10px; right: 10px; width: auto; max-height: 70dvh; overflow: auto; transform-origin: bottom center; }
+
+  .app-a .content { padding: 14px 14px calc(96px + env(safe-area-inset-bottom)); }
+  .app-a .page-footer { display: none; }
+  .app-a h1, .app-a .dash-greeting h1 { font-size: 32px; }
+  .app-a .dash { gap: 18px; padding-top: 4px; }
+  .app-a .dash-hero { flex-direction: column; align-items: stretch; gap: 18px; }
+  .app-a .dash-greeting { flex: none; }
+  .app-a .dash-segments { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 8px; }
+  .app-a .segment { min-width: 0; }
+  .app-a .segment > b { height: 36px; }
+  .app-a .dash-numbers { justify-content: space-between; gap: 8px; }
+  .app-a .dash-numbers div { flex: 1; padding: 12px 14px; border-radius: 20px; background: var(--g-fill); border: 1px solid var(--g-line); box-shadow: var(--g-hi); }
+  .app-a .dash-numbers strong { font-size: 38px; }
+  .app-a .dash-widgets { grid-template-columns: 1fr; gap: 12px; }
+  .app-a .widget { border-radius: 24px; padding: 18px; }
+  .app-a .week-bars { height: 120px; }
+
+  .app-a .board-strip { margin: 18px -14px 0; padding: 4px 14px; scroll-snap-type: x proximity; }
+  .app-a .board-strip button { scroll-snap-align: start; height: 42px; }
+  .app-a .page-heading { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .app-a .heading-actions { display: none; }
+  .app-a .board-toolbar { gap: 10px; margin-top: 16px; }
+  .app-a .board-section-title { font-size: 24px; width: 100%; }
+  .app-a .view-pills { width: 100%; }
+  .app-a .view-pills button { flex: 1; justify-content: center; }
+  .app-a .toolbar-actions { width: 100%; display: grid; grid-template-columns: auto 1fr auto; gap: 8px; }
+  .app-a .toolbar-actions .button { width: 100%; }
+  .app-a .private-label { display: none; }
+  .app-a .board-meta > span:last-child { display: none; }
+  .app-a .filter-panel { display: grid; grid-template-columns: 1fr 1fr; }
+  .app-a .filter-panel > * { max-width: none !important; }
+
+  /* Kanban: one lane per screen, swipe between lanes */
+  .app-a .kanban { margin: 0 -14px; padding: 2px 14px 18px; gap: 12px; scroll-snap-type: x mandatory; scroll-padding: 0 14px; min-height: 0; }
+  .app-a .column { flex: 0 0 calc(100vw - 52px); max-width: none; scroll-snap-align: start; }
+  .app-a .add-column { flex: 0 0 auto; scroll-snap-align: start; }
+  .app-a .task-card { padding: 15px; }
+
+  .app-a .table-wrap { border-radius: 22px; }
+  .app-a .table-wrap th:nth-child(4), .app-a .table-wrap td:nth-child(4),
+  .app-a .table-wrap th:nth-child(5), .app-a .table-wrap td:nth-child(5) { display: none; }
+  .app-a .calendar-day { min-height: 76px; padding: 5px; }
+  .app-a .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .app-a .settings-grid { grid-template-columns: 1fr; }
+  .app-a .panel { border-radius: 22px; padding: 18px; }
+
+  /* Task card opens as a bottom sheet */
+  .app-a .sheet-backdrop, .app-a .modal-backdrop { padding: 0; align-items: flex-end; }
+  .app-a .modal, .app-a .modal.card-sheet {
+    width: 100%; max-width: none; max-height: calc(100dvh - 24px - env(safe-area-inset-top)); border-radius: 26px 26px 0 0;
+    animation: sheet-up 0.45s var(--a-ease) both; padding-bottom: env(safe-area-inset-bottom);
+  }
+  .app-a .modal > header { position: relative; padding-top: 22px; }
+  .app-a .modal > header::before { content: ""; position: absolute; top: 8px; left: 50%; width: 40px; height: 5px; margin-left: -20px; border-radius: 999px; background: var(--a-line); }
+  .app-a .modal footer { position: sticky; bottom: -22px; margin: 22px -18px -22px; padding: 14px 18px calc(14px + env(safe-area-inset-bottom)); background: var(--a-card); }
+  .app-a .modal footer .button { flex: 1; }
+  .app-a .form-row > label { min-width: calc(50% - 8px); }
+  .app-a .card-actions .button { min-height: 38px; }
+  @keyframes sheet-up { from { transform: translateY(100%); } }
+
+  .app-a .toast { bottom: calc(88px + env(safe-area-inset-bottom)); width: calc(100vw - 28px); justify-content: space-between; }
+
+  /* Bottom tab bar */
+  .app-a .tabbar {
+    display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); position: fixed; z-index: 35; left: 10px; right: 10px;
+    bottom: calc(10px + env(safe-area-inset-bottom)); padding: 6px; border-radius: 26px;
+    background: rgba(255, 255, 255, 0.72); border: 1px solid rgba(255, 255, 255, 0.9);
+    box-shadow: inset 0 1px 0 #fff, 0 18px 40px -18px rgba(28, 29, 26, 0.45);
+    -webkit-backdrop-filter: blur(22px) saturate(170%); backdrop-filter: blur(22px) saturate(170%);
+  }
+  .dark .app-a .tabbar { background: rgba(35, 36, 31, 0.82); border-color: var(--a-line); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 18px 40px -18px #000; }
+  .app-a .tabbar button { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 7px 2px 6px; border-radius: 20px; color: var(--a-muted); transition: background 0.25s, color 0.25s; min-height: 52px; }
+  .app-a .tabbar small { font-size: 10.5px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+  .app-a .tab-icon { position: relative; display: grid; place-items: center; }
+  .app-a .tab-icon em { position: absolute; top: -6px; right: -12px; font-style: normal; font-size: 10px; font-weight: 700; min-width: 17px; height: 17px; padding: 0 4px; border-radius: 999px; display: grid; place-items: center; background: var(--a-green); color: var(--a-green-ink); }
+  .app-a .tabbar button.active { background: var(--g-dark); color: #fff; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 8px 18px -10px rgba(0, 0, 0, 0.6); }
+  .dark .app-a .tabbar button.active { color: #1c1d1a; }
+  .app-a .tabbar button.active svg { animation: tab-pop 0.35s var(--a-ease); }
+  @keyframes tab-pop { 50% { transform: translateY(-2px) scale(1.12); } }
+}
+
+/* Very small phones */
+@media (max-width: 360px) {
+  .app-a .brand-pill span { display: none; }
+  .app-a h1, .app-a .dash-greeting h1 { font-size: 28px; }
+  .app-a .dash-numbers strong { font-size: 32px; }
+}
