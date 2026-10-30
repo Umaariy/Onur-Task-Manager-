@@ -725,3 +725,14 @@ body, .dark body {
   .dark .app-a .user-pop { background: rgba(35, 36, 31, 0.98); }
   .app-a .user-language .language-menu { display: block; }
 }
+
+/* Pull to refresh */
+.ptr {
+  position: fixed; z-index: 60; top: calc(-36px + env(safe-area-inset-top)); left: 50%; width: 40px; height: 40px; border-radius: 999px;
+  display: grid; place-items: center; color: #1c1d1a; background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 10px 24px -10px rgba(28, 29, 26, 0.45); pointer-events: none; transition: background 0.2s, color 0.2s;
+}
+.ptr.ready, .ptr.loading { background: #57d07f; color: #0b3018; }
+.ptr.loading svg { animation: spin 0.8s linear infinite; }
+.dark .ptr { background: #2b2c27; color: #f1efe8; }
+@media (max-width: 1100px) { html { overscroll-behavior-y: none; } }
