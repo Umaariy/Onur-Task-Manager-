@@ -6,6 +6,8 @@ const nextConfig: NextConfig = {
   // The second design runs from its own build folder so both can run at once (npm run dev:b).
   distDir: process.env.OTM_DIST_DIR || ".next",
   poweredByHeader: false,
+  // Development only: let a phone or tablet on the same office Wi-Fi open the dev server by IP.
+  allowedDevOrigins: ["192.168.*.*", "10.*.*.*", "172.*.*.*"],
   async headers() {
     return [{
       source: "/:path*",
