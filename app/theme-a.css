@@ -481,7 +481,7 @@ body, .dark body {
 }
 
 /* Ambient glow behind the glass, so the blur has something to soften */
-.app-a .shell { position: relative; overflow: hidden; isolation: isolate; background:
+.app-a .shell { position: relative; overflow: hidden; overflow: clip; isolation: isolate; background:
   radial-gradient(900px 600px at 85% 100%, rgba(87, 208, 127, 0.16), transparent 70%),
   linear-gradient(140deg, var(--a-shell) 0%, var(--a-shell) 55%, var(--a-shell-2) 100%); }
 .app-a .shell::before, .app-a .shell::after { content: ""; position: absolute; z-index: -1; border-radius: 50%; filter: blur(70px); pointer-events: none; }
@@ -630,7 +630,8 @@ body, .dark body {
   .app-a .top-tools { gap: 6px; }
   .app-a .round-button, .app-a .user-trigger, .app-a .search-pill { width: 42px; height: 42px; }
   .app-a .search-pill:focus-within { position: absolute; left: 14px; right: 14px; width: auto; z-index: 2; }
-  .app-a .user-pop { position: fixed; top: auto; bottom: calc(76px + env(safe-area-inset-bottom)); left: 10px; right: 10px; width: auto; max-height: 70dvh; overflow: auto; transform-origin: bottom center; }
+  /* the glass header blurs its background, which also traps position:fixed children — keep the menu anchored under the avatar */
+  .app-a .user-pop { position: absolute; top: calc(100% + 10px); right: 0; bottom: auto; left: auto; width: min(300px, calc(100vw - 28px)); max-height: calc(100dvh - 140px); overflow: auto; transform-origin: top right; }
 
   .app-a .content { padding: 14px 14px calc(96px + env(safe-area-inset-bottom)); }
   .app-a .page-footer { display: none; }
@@ -717,4 +718,10 @@ body, .dark body {
   .app-a .brand-pill span { display: none; }
   .app-a h1, .app-a .dash-greeting h1 { font-size: 28px; }
   .app-a .dash-numbers strong { font-size: 32px; }
+}
+@media (max-width: 760px) {
+  /* blur does not work inside the blurred header, so the phone menu gets a solid surface */
+  .app-a .user-pop { background: rgba(255, 255, 255, 0.98); box-shadow: 0 24px 60px -18px rgba(28, 29, 26, 0.5); }
+  .dark .app-a .user-pop { background: rgba(35, 36, 31, 0.98); }
+  .app-a .user-language .language-menu { display: block; }
 }
