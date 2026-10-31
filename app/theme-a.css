@@ -785,3 +785,31 @@ body, .dark body {
 }
 /* tablets: the main menu may need to scroll sideways */
 @media (max-width: 1200px) { .app-a .main-nav { overflow-x: auto; } }
+
+/* ---------- v5: glass lens stays glassy when settled; cleaner search ---------- */
+.app-a .pill-indicator, .dark .app-a .pill-indicator {
+  background: rgba(255, 255, 255, 0.22);
+  box-shadow: 0 8px 22px -12px rgba(28, 29, 26, 0.35), inset 0 0 12px rgba(255, 255, 255, 0.7), inset 0 0 0 1px rgba(255, 255, 255, 0.65);
+  -webkit-backdrop-filter: saturate(180%) brightness(1.05); backdrop-filter: saturate(180%) brightness(1.05);
+}
+.dark .app-a .pill-indicator { background: rgba(255, 255, 255, 0.08); box-shadow: 0 8px 22px -12px #000, inset 0 0 12px rgba(255, 255, 255, 0.16), inset 0 0 0 1px rgba(255, 255, 255, 0.14); }
+.app-a .pill-indicator::before, .app-a .pill-indicator::after { opacity: 1; }
+.app-a .pill-indicator::before { opacity: 0.85; }
+.dark .app-a .pill-indicator::after { opacity: 0.3; }
+.app-a .pill-indicator.moving { background: rgba(255, 255, 255, 0.16); }
+.app-a .pill-indicator.moving::before { opacity: 1; }
+
+.app-a .search-pill { gap: 10px; padding: 0 14px 0 16px; width: 260px; color: var(--a-muted); transition: background 0.2s, box-shadow 0.2s, width 0.25s var(--a-ease); }
+.app-a .search-pill svg { color: var(--a-muted); }
+.app-a .search-pill input, .app-a .search-pill input:focus { flex: 1; width: auto; min-width: 0; border: 0; outline: 0; box-shadow: none; background: transparent; padding: 0; font-size: 14px; color: var(--a-ink); }
+.app-a .search-pill input::placeholder { color: var(--a-muted); }
+.app-a .search-pill:focus-within { background: #fff; box-shadow: var(--g-hi), 0 10px 26px -14px rgba(28, 29, 26, 0.35); border-color: #fff; width: 300px; }
+.dark .app-a .search-pill:focus-within { background: rgba(255, 255, 255, 0.12); border-color: rgba(255, 255, 255, 0.2); }
+.app-a .search-pill kbd { font: 500 11px "Outfit", sans-serif; color: var(--a-muted); border: 0; background: rgba(28, 29, 26, 0.06); border-radius: 6px; padding: 3px 7px; white-space: nowrap; }
+.dark .app-a .search-pill kbd { background: rgba(255, 255, 255, 0.1); }
+.app-a .search-pill:focus-within kbd { display: none; }
+@media (max-width: 1400px) { .app-a .search-pill { width: 200px; } .app-a .search-pill:focus-within { width: 240px; } }
+@media (max-width: 760px) {
+  .app-a .search-pill { width: 42px; padding: 0; }
+  .app-a .search-pill:focus-within { width: auto; padding: 0 14px; }
+}
