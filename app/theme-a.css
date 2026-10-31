@@ -914,3 +914,12 @@ body, .dark body {
 }
 .dark .app-a button:focus-visible, .dark .app-a a:focus-visible, .dark .app-a [role="button"]:focus-visible { outline-color: rgba(255, 255, 255, 0.35); }
 .app-a .pill-tabs button:focus-visible, .app-a .board-strip button:focus-visible { outline-offset: -2px; }
+
+/* ---------- v12: board chips — room for their shadows so the scroll area does not cut them ---------- */
+.app-a .board-strip { padding: 8px 6px 16px; margin: 14px -6px -10px; }
+@media (max-width: 760px) { .app-a .board-strip { margin: 10px -14px -10px; padding: 8px 14px 16px; } }
+/* blur inside a scrolling row painted a visible rectangle behind the chips; plain translucent fill instead */
+.app-a .board-strip button { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(255, 255, 255, 0.72); }
+.dark .app-a .board-strip button { background: rgba(255, 255, 255, 0.07); }
+.app-a .board-strip button.active { background: var(--g-dark); }
+@media (min-width: 761px) { .app-a .board-strip { overflow: visible; flex-wrap: wrap; } }
