@@ -840,3 +840,19 @@ body, .dark body {
 .dark .app-a .pill-indicator, .dark .app-a .pill-indicator.moving { background: rgba(255, 255, 255, 0.1); box-shadow: 0 10px 24px -12px #000, inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 0 14px rgba(255, 255, 255, 0.14), inset 0 0 0 1px rgba(255, 255, 255, 0.18); }
 .app-a .pill-indicator::after, .app-a .pill-indicator.moving::after { opacity: 1; background: radial-gradient(120% 80% at 30% 0%, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0) 55%); }
 .dark .app-a .pill-indicator::after { opacity: 0.25; }
+
+/* ---------- v7: lens tinted like frosted glass (not white); search glyphs never clipped ---------- */
+.app-a .pill-indicator, .dark .app-a .pill-indicator {
+  background: rgba(60, 60, 67, 0.09);
+  box-shadow: 0 6px 16px -10px rgba(28, 29, 26, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.85), inset 0 -1px 0 rgba(255, 255, 255, 0.35), inset 0 0 0 1px rgba(255, 255, 255, 0.45), inset 0 0 10px rgba(255, 255, 255, 0.35);
+}
+.app-a .pill-indicator.moving {
+  background: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 14px 30px -12px rgba(28, 29, 26, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.95), inset 0 -1px 0 rgba(255, 255, 255, 0.5), inset 0 0 0 1.5px rgba(255, 255, 255, 0.75), inset 0 0 16px rgba(255, 255, 255, 0.7);
+}
+.dark .app-a .pill-indicator { background: rgba(255, 255, 255, 0.08); box-shadow: 0 6px 16px -10px #000, inset 0 1px 0 rgba(255, 255, 255, 0.18), inset 0 0 0 1px rgba(255, 255, 255, 0.12); }
+.dark .app-a .pill-indicator.moving { background: rgba(255, 255, 255, 0.12); box-shadow: 0 14px 30px -12px #000, inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 0 0 1.5px rgba(255, 255, 255, 0.2), inset 0 0 16px rgba(255, 255, 255, 0.18); }
+.app-a .pill-indicator::after, .app-a .pill-indicator.moving::after { opacity: 0.6; background: radial-gradient(110% 70% at 30% 0%, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0) 60%); }
+.app-a .pill-indicator.moving::after { opacity: 1; }
+
+.app-a .search-pill input, .app-a .search-pill input:focus { padding: 0 6px; margin: 0 -6px; height: 100%; line-height: 44px; }
