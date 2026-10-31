@@ -813,3 +813,30 @@ body, .dark body {
   .app-a .search-pill { width: 42px; padding: 0; }
   .app-a .search-pill:focus-within { width: auto; padding: 0 14px; }
 }
+
+/* ---------- v6: header never wraps; lens is clear glass (no rainbow) ---------- */
+.app-a .topnav { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 16px; flex-wrap: nowrap; }
+.app-a .main-nav { justify-self: center; margin: 0; max-width: 100%; overflow-x: auto; }
+.app-a .top-tools { margin-left: 0; justify-self: end; flex-wrap: nowrap; }
+.app-a .search-pill, .app-a .search-pill:focus-within { width: 240px; transition: background 0.2s, box-shadow 0.2s; }
+.app-a .search-pill kbd, .app-a .search-pill:focus-within kbd { display: inline-block; }
+@media (max-width: 1400px) { .app-a .search-pill, .app-a .search-pill:focus-within { width: 190px; } .app-a .search-pill kbd { display: none !important; } }
+@media (max-width: 1200px) {
+  .app-a .topnav { grid-template-columns: auto auto; }
+  .app-a .main-nav { grid-column: 1 / -1; justify-self: stretch; order: 3; }
+}
+@media (max-width: 760px) {
+  .app-a .topnav { grid-template-columns: auto 1fr; }
+  .app-a .search-pill, .app-a .search-pill:focus-within { width: 42px; }
+  .app-a .search-pill:focus-within { width: auto; position: absolute; left: 14px; right: 14px; }
+  .app-a .search-pill kbd { display: none !important; }
+}
+
+.app-a .pill-indicator::before, .app-a .pill-indicator.moving::before { display: none; }
+.app-a .pill-indicator, .dark .app-a .pill-indicator, .app-a .pill-indicator.moving {
+  background: rgba(255, 255, 255, 0.34);
+  box-shadow: 0 10px 24px -12px rgba(28, 29, 26, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.95), inset 0 0 14px rgba(255, 255, 255, 0.75), inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+}
+.dark .app-a .pill-indicator, .dark .app-a .pill-indicator.moving { background: rgba(255, 255, 255, 0.1); box-shadow: 0 10px 24px -12px #000, inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 0 14px rgba(255, 255, 255, 0.14), inset 0 0 0 1px rgba(255, 255, 255, 0.18); }
+.app-a .pill-indicator::after, .app-a .pill-indicator.moving::after { opacity: 1; background: radial-gradient(120% 80% at 30% 0%, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0) 55%); }
+.dark .app-a .pill-indicator::after { opacity: 0.25; }
