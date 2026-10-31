@@ -305,7 +305,7 @@ export default function KanbanApp({ design = 'a' }: { design?: 'a' | 'b' }) {
         openCard(c); }}><Bell size={18}/><span>{n.text}<small>{new Date(n.at).toLocaleString(locale === 'ru' ? 'ru-RU' : locale === 'uz-Cyrl' ? 'uz-Cyrl-UZ' : 'uz-Latn-UZ')}</small></span></button>) : <Empty text="Yangi bildirishnomalar yo‘q"/>}</div> : view === 'archive' ? <div className="panel"><h2>{t("Arxivlangan doskalar va vazifalar")}</h2>{state.boards.filter(b => b.archived).map(b => <div className="member-row" key={b.id}><Columns3 size={20}/><strong>{b.name}</strong><button className="button secondary" onClick={() => mutate('board.save', { ...b, archived: false }, false)}>{t("Qaytarish")}</button></div>)}{state.cards.filter(c => c.archived).map(c => <div className="member-row" key={c.id}><Archive size={20}/><strong>{c.title}</strong><button className="button secondary" onClick={() => mutate('card.archive', { id: c.id, archived: false }, false)}>{t("Qaytarish")}</button></div>)}{!state.boards.some(b => b.archived) && !state.cards.some(c => c.archived) && <Empty text="Arxiv bo‘sh"/>}</div> : view === 'settings' ? <div className="settings-grid"><div className="panel"><h2>{t("Ish maydoni")}</h2><label>{t("Nomi")}<input defaultValue={state.name} key={state.name} id="ws-name"/></label><label>{t("Tavsif")}<textarea defaultValue={state.description} key={state.description} id="ws-description"/></label><button className="button" disabled={!canManage(state, user)} onClick={() => mutate('workspace.save', { name: (document.getElementById('ws-name') as HTMLInputElement).value, description: (document.getElementById('ws-description') as HTMLTextAreaElement).value }, false)}>{t("Saqlash")}</button></div><div className="panel"><h2>{t("Profil va ko‘rinish")}</h2><label>{t("Ism-familiya")}<input defaultValue={me?.name} key={me?.name} id="profile-name"/></label><button className="button secondary" onClick={() => mutate('profile.save', { name: (document.getElementById('profile-name') as HTMLInputElement).value }, false)}>{t("Profilni saqlash")}</button><div className="language-setting">{t("Platforma tili")}<LanguageMenu locale={locale} onChange={setLocale} t={t} /></div><button className="settings-toggle" onClick={() => setDark(!dark)}>{dark ? <Sun size={19}/> : <Moon size={19}/>} {t(dark ? 'Yorug‘ rejim' : 'Qorong‘i rejim')}<span>{t(dark ? 'Yoqilgan' : 'O‘chirilgan')}</span></button><button className="settings-toggle" onClick={logout}><LogOut size={18}/>{t("Hisobdan chiqish")}</button></div>{canManage(state, user) && <div className="panel roles-panel"><div className="panel-heading"><h2>{t("Doska rollari va huquqlar")}</h2><button className="button secondary" onClick={() => setDialog({ kind: 'role', data: { id: '', name: '', nameCyrl: '', nameRu: '', scope: 'board', permissions: ['view'] } })}><Plus size={16}/> {t("Yangi rol")}</button></div>{state.roles.filter(r => r.scope === 'board').map(r => <button className="role-line" key={r.id} onClick={() => setDialog({ kind: 'role', data: { ...structuredClone(r), ...roleNameFields(r) } })}><ShieldCheck size={18}/><strong>{roleLabel(r.id, r.name, locale, r)}</strong><span>{countLabel(r.permissions.length, "permissions", locale)}</span><ChevronRight size={16}/></button>)}</div>}</div> : null}</div></div>}
  <footer className="page-footer"><span>{t("ONUR Task Manager")}</span><span>{fullDate(new Date(), locale)}</span></footer></>;
     const shellA = <div className="shell"><header className="topnav"><a className="brand-pill" href="/" aria-label={t("ONUR Task Manager")}><img src="/onur-logo.png" alt="ONUR"/><span>Tasks</span></a><PillTabs className="main-nav" label={t('Asosiy menyu')} items={navItems} active={navActive} onSelect={id => { if (id === 'kanban') setSearch(''); switchView(id); }}/><div className="top-tools"><label className="search-pill"><Search size={16}/><input id="search" aria-label={t("Vazifalarni qidirish")} placeholder={t("Vazifa qidirish...")} value={search} onChange={e => { setSearch(e.target.value); if (e.target.value)
-        setView('list'); }}/><kbd>Ctrl K</kbd></label><button className={'round-button notification-bell' + (ringing ? ' ringing' : '')} aria-label={t("Bildirishnomalar")} onClick={() => switchView('notifications')}><Bell size={18}/>{unread > 0 && <i />}</button><UserMenu state={state} user={user} name={me?.name ?? t('Siz')} role={memberRoleLabel(me)} dark={dark} onDark={() => setDark(!dark)} onView={switchView} onSpaces={() => setDialog({ kind: 'spaces', data: { name: '' } })} onLogout={logout} language={<LanguageMenu locale={locale} onChange={setLocale} t={t} compact />}/></div></header><main className="content">{body}</main><nav className="tabbar" aria-label={t('Asosiy menyu')}>{navItems.filter(item => item.id !== 'members').map(({ id, label, icon: Icon, badge }) => <button key={id} type="button" className={navActive === id ? 'active' : ''} aria-current={navActive === id ? 'page' : undefined} onClick={() => { if (id === 'kanban') setSearch(''); switchView(id); window.scrollTo({ top: 0, behavior: 'smooth' }); }}><span className="tab-icon"><Icon size={21}/>{!!badge && <em>{badge}</em>}</span><small>{({ home: t('Asosiy'), mine: t('Vazifalarim'), reports: t('Hisobot') } as Record<string, string>)[id] ?? label}</small></button>)}</nav></div>;
+        setView('list'); }}/><kbd>Ctrl K</kbd></label><button className={'round-button notification-bell' + (ringing ? ' ringing' : '')} aria-label={t("Bildirishnomalar")} onClick={() => switchView('notifications')}><Bell size={18}/>{unread > 0 && <i />}</button><UserMenu state={state} user={user} name={me?.name ?? t('Siz')} role={memberRoleLabel(me)} dark={dark} onDark={() => setDark(!dark)} onView={switchView} onSpaces={() => setDialog({ kind: 'spaces', data: { name: '' } })} onLogout={logout} language={<LanguageMenu locale={locale} onChange={setLocale} t={t} compact />}/></div></header><main className="content">{body}</main><PillTabs className="tabbar" stacked draggable label={t('Asosiy menyu')} items={navItems.filter(item => item.id !== 'members').map(item => ({ ...item, short: ({ home: t('Asosiy'), mine: t('Vazifalarim'), reports: t('Hisobot') } as Record<string, string>)[item.id] }))} active={navActive} onSelect={id => { if (id === 'kanban') setSearch(''); switchView(id); window.scrollTo({ top: 0, behavior: 'smooth' }); }}/></div>;
     const shellB = <div className="b-window"><header className="b-top"><a className="brand-pill" href="/" aria-label={t("ONUR Task Manager")}><img src="/onur-logo.png" alt="ONUR"/><span>Tasks</span></a><div className="b-top-tools"><label className="search-pill"><Search size={16}/><input id="search" aria-label={t("Vazifalarni qidirish")} placeholder={t("Vazifa qidirish...")} value={search} onChange={e => { setSearch(e.target.value); if (e.target.value)
         setView('list'); }}/><kbd>Ctrl K</kbd></label><button className={'round-button notification-bell' + (ringing ? ' ringing' : '')} aria-label={t("Bildirishnomalar")} onClick={() => switchView('notifications')}><Bell size={18}/>{unread > 0 && <i />}</button><UserMenu state={state} user={user} name={me?.name ?? t('Siz')} role={memberRoleLabel(me)} dark={dark} onDark={() => setDark(!dark)} onView={switchView} onSpaces={() => setDialog({ kind: 'spaces', data: { name: '' } })} onLogout={logout} language={<LanguageMenu locale={locale} onChange={setLocale} t={t} compact />}/></div></header><div className="b-frame"><aside className="b-side"><div className="b-group"><div className="b-caption">{t('Umumiy')}</div>{navItems.filter(item => ['kanban', 'mine', 'calendar'].includes(item.id)).map(({ id, label, icon: Icon, badge }) => <button key={id} className={navActive === id ? 'active' : ''} aria-current={navActive === id ? 'page' : undefined} onClick={() => { if (id === 'kanban') setSearch(''); switchView(id); }}><Icon size={17}/><span>{label}</span>{!!badge && <em>{badge}</em>}</button>)}</div><div className="b-group"><div className="b-caption">{t('Barcha doskalar')}{canManage(state, user) && <button aria-label={t('Doska yaratish')} onClick={() => setDialog({ kind: 'board-new', data: { name: '', description: '', template: '' } })}><Plus size={14}/></button>}</div>{state.boards.filter(b => !b.archived).map(b => <button key={b.id} className={boardId === b.id && ['kanban', 'list', 'calendar'].includes(view) ? 'active' : ''} onClick={() => { setBoardId(b.id); setSearch(''); if (!['kanban', 'list', 'calendar'].includes(view)) switchView('kanban'); }}><span className="b-hash">#</span><span>{translatePreset(b.name, locale)}</span>{favorites.includes(b.id) && <Star size={11}/>}</button>)}</div><div className="b-side-bottom">{me?.role !== 'guest' && <button className={view === 'members' ? 'active' : ''} onClick={() => switchView('members')}><Users size={17}/><span>{t(canManage(state, user) ? 'Jamoa va huquqlar' : 'Jamoa')}</span></button>}<button className={view === 'settings' ? 'active' : ''} onClick={() => switchView('settings')}><Settings size={17}/><span>{t('Sozlamalar')}</span></button></div></aside><main className="content b-main">{body}</main></div></div>;
     return <LanguageContext.Provider value={locale}><DesignContext.Provider value={design}><div className={design === 'b' ? 'app-b' : 'app-a'}>{(pull > 0 || pulling) && <div className={'ptr' + (pulling ? ' loading' : pull >= 64 ? ' ready' : '')} style={{ transform: `translate(-50%, ${pull}px)` }} role="status" aria-label={t('Yangilanmoqda')}><RefreshCw size={18} style={pulling ? undefined : { transform: `rotate(${pull * 4}deg)` }}/></div>}{design === 'b' ? shellB : shellA}
@@ -492,22 +492,98 @@ export function fireSalute(x: number, y: number) {
     setTimeout(() => root.remove(), 1500);
 }
 
-type PillItem = { id: string; label: string; icon?: any; badge?: number };
-/** Pill-shaped tabs with a dark indicator that slides to the active item. */
-function PillTabs({ items, active, onSelect, label, className = '' }: { items: PillItem[]; active: string; onSelect: (id: string) => void; label: string; className?: string }) {
-    const wrap = useRef<HTMLDivElement>(null);
-    const [indicator, setIndicator] = useState<{ left: number; width: number } | null>(null);
+type PillItem = { id: string; label: string; short?: string; icon?: any; badge?: number };
+/**
+ * Tabs with a "liquid glass" lens: when the active tab changes, the lens lifts, stretches and slides
+ * to the new tab, then settles into a soft pill. With `draggable`, the lens can also be dragged with a
+ * finger and dropped on a tab (phone tab bar).
+ */
+function PillTabs({ items, active, onSelect, label, className = '', stacked = false, draggable = false }: { items: PillItem[]; active: string; onSelect: (id: string) => void; label: string; className?: string; stacked?: boolean; draggable?: boolean }) {
+    const wrap = useRef<HTMLElement>(null);
+    const lens = useRef<HTMLSpanElement>(null);
+    const placed = useRef<{ left: number; width: number } | null>(null);
+    const drag = useRef<{ x: number; id: number; moved: boolean; grab: number } | null>(null);
+    const suppress = useRef(false);
     const signature = items.map(item => item.id + item.label + (item.badge ?? '')).join('|');
+    const reduced = () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const measure = (id: string) => { const el = wrap.current?.querySelector<HTMLElement>(`[data-id="${CSS.escape(id)}"]`); return el ? { left: el.offsetLeft, width: el.offsetWidth } : null; };
+    const settle = (node: HTMLElement) => { node.classList.remove('moving'); };
+    const place = (target: { left: number; width: number } | null, animate: boolean) => {
+        const node = lens.current;
+        if (!node) return;
+        if (!target) { node.style.opacity = '0'; placed.current = null; return; }
+        const from = placed.current;
+        placed.current = target;
+        node.style.opacity = '1';
+        node.getAnimations().forEach(animation => animation.cancel());
+        node.style.transform = `translateX(${target.left}px)`;
+        node.style.width = target.width + 'px';
+        if (!animate || !from || reduced() || (from.left === target.left && from.width === target.width)) { settle(node); return; }
+        const distance = Math.abs(target.left - from.left);
+        const wide = Math.max(from.width, target.width) + Math.min(distance * 0.18, 40);
+        node.classList.add('moving');
+        const animation = node.animate([
+            { transform: `translateX(${from.left}px) scale(1, 1)`, width: from.width + 'px' },
+            { transform: `translateX(${from.left + (target.left - from.left) * 0.2}px) scale(1.14, 1.2)`, width: from.width + 'px', offset: 0.18 },
+            { transform: `translateX(${(from.left + target.left) / 2 - (wide - (from.width + target.width) / 2) / 2}px) scale(1.16, 1.18)`, width: wide + 'px', offset: 0.5 },
+            { transform: `translateX(${target.left}px) scale(1.12, 1.14)`, width: target.width + 'px', offset: 0.78 },
+            { transform: `translateX(${target.left}px) scale(0.97, 0.98)`, width: target.width + 'px', offset: 0.9 },
+            { transform: `translateX(${target.left}px) scale(1, 1)`, width: target.width + 'px' },
+        ], { duration: 620, easing: 'cubic-bezier(0.3, 0.7, 0.2, 1)' });
+        animation.onfinish = () => settle(node);
+    };
     useLayoutEffect(() => {
-        const measure = () => { const el = wrap.current?.querySelector<HTMLElement>('[data-active="true"]'); setIndicator(el ? { left: el.offsetLeft, width: el.offsetWidth } : null); };
-        measure();
-        const observer = new ResizeObserver(measure);
+        place(measure(active), true);
+        // ResizeObserver also fires once right after observe(); only react to real size changes
+        let lastWidth = wrap.current?.offsetWidth ?? 0;
+        const observer = new ResizeObserver(() => { const width = wrap.current?.offsetWidth ?? 0; if (width === lastWidth) return; lastWidth = width; place(measure(active), false); });
         if (wrap.current) observer.observe(wrap.current);
         return () => observer.disconnect();
     }, [active, signature]);
-    return <nav ref={wrap} className={'pill-tabs ' + className} aria-label={label}>
-        {indicator && <span className="pill-indicator" aria-hidden="true" style={{ transform: `translateX(${indicator.left}px)`, width: indicator.width }}/>}
-        {items.map(({ id, label, icon: Icon, badge }) => <button key={id} type="button" data-active={active === id} aria-current={active === id ? 'page' : undefined} className={active === id ? 'active' : ''} onClick={() => onSelect(id)}>{Icon && <Icon size={16} aria-hidden="true"/>}<span>{label}</span>{!!badge && <em>{badge}</em>}</button>)}
+    const nearest = (center: number) => {
+        let best = active, gap = Infinity;
+        wrap.current?.querySelectorAll<HTMLElement>('[data-id]').forEach(el => { const d = Math.abs(el.offsetLeft + el.offsetWidth / 2 - center); if (d < gap) { gap = d; best = el.dataset.id!; } });
+        return best;
+    };
+    const dragHandlers = draggable ? {
+        onPointerDown: (e: React.PointerEvent<HTMLElement>) => {
+            if (e.pointerType === 'mouse' && e.button !== 0) return;
+            const box = wrap.current!.getBoundingClientRect();
+            const current = placed.current;
+            const x = e.clientX - box.left;
+            drag.current = { x: e.clientX, id: e.pointerId, moved: false, grab: current && x >= current.left && x <= current.left + current.width ? x - current.left : (current?.width ?? 60) / 2 };
+        },
+        onPointerMove: (e: React.PointerEvent<HTMLElement>) => {
+            const d = drag.current, node = lens.current, current = placed.current;
+            if (!d || !node || !current || d.id !== e.pointerId) return;
+            if (!d.moved) { if (Math.abs(e.clientX - d.x) < 8) return; d.moved = true; wrap.current!.setPointerCapture(e.pointerId); node.getAnimations().forEach(a => a.cancel()); node.classList.add('moving', 'held'); }
+            const box = wrap.current!.getBoundingClientRect();
+            const left = Math.max(-8, Math.min(box.width - current.width + 8, e.clientX - box.left - d.grab));
+            node.style.transform = `translateX(${left}px) scale(1.18, 1.22)`;
+            const id = nearest(left + current.width / 2);
+            wrap.current!.querySelectorAll<HTMLElement>('[data-id]').forEach(el => el.classList.toggle('hover', el.dataset.id === id));
+        },
+        onPointerUp: (e: React.PointerEvent<HTMLElement>) => {
+            const d = drag.current; drag.current = null;
+            const node = lens.current;
+            if (!d?.moved || !node || !placed.current) return;
+            suppress.current = true;
+            setTimeout(() => { suppress.current = false; }, 0);
+            const box = wrap.current!.getBoundingClientRect();
+            const left = Math.max(0, Math.min(box.width - placed.current.width, e.clientX - box.left - d.grab));
+            wrap.current!.querySelectorAll<HTMLElement>('.hover').forEach(el => el.classList.remove('hover'));
+            node.classList.remove('held');
+            const id = nearest(left + placed.current.width / 2);
+            placed.current = { left, width: placed.current.width };
+            if (id === active) place(measure(active), true); else onSelect(id);
+        },
+        onPointerCancel: () => { drag.current = null; lens.current?.classList.remove('held'); place(measure(active), true); },
+    } : {};
+    return <nav ref={wrap} className={'pill-tabs ' + className} aria-label={label} {...dragHandlers}>
+        <span ref={lens} className="pill-indicator" aria-hidden="true" style={{ opacity: 0 }}/>
+        {items.map(({ id, label, short, icon: Icon, badge }) => <button key={id} type="button" data-id={id} data-active={active === id} aria-current={active === id ? 'page' : undefined} className={active === id ? 'active' : ''} onClick={() => { if (suppress.current) return; onSelect(id); }}>
+            {stacked ? <><span className="tab-icon">{Icon && <Icon size={21} aria-hidden="true"/>}{!!badge && <em>{badge}</em>}</span><small>{short ?? label}</small></> : <>{Icon && <Icon size={16} aria-hidden="true"/>}<span>{label}</span>{!!badge && <em>{badge}</em>}</>}
+        </button>)}
     </nav>;
 }
 
