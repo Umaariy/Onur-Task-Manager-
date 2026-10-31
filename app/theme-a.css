@@ -867,3 +867,29 @@ body, .dark body {
 .dark .app-a .pill-indicator, .dark .app-a .pill-indicator.moving { background: rgba(255, 255, 255, 0.12); box-shadow: 0 14px 30px -12px #000, inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 0 0 1.5px rgba(255, 255, 255, 0.2), inset 0 0 16px rgba(255, 255, 255, 0.18); }
 .app-a .pill-indicator::after, .app-a .pill-indicator.moving::after { opacity: 1; background: radial-gradient(110% 70% at 30% 0%, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0) 60%); }
 .dark .app-a .pill-indicator::after { opacity: 0.3; }
+
+/* ---------- v9: real lens feel — translucent bar, refracting edges, magnified label ---------- */
+.app-a .pill-tabs { background: rgba(255, 255, 255, 0.55); -webkit-backdrop-filter: blur(16px) saturate(160%); backdrop-filter: blur(16px) saturate(160%); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 8px 24px -16px rgba(28, 29, 26, 0.3); }
+.dark .app-a .pill-tabs { background: rgba(35, 36, 31, 0.6); }
+.app-a .pill-indicator, .dark .app-a .pill-indicator, .app-a .pill-indicator.moving {
+  background: transparent; overflow: hidden;
+  box-shadow: 0 10px 24px -12px rgba(28, 29, 26, 0.45), inset 0 0 0 1px rgba(255, 255, 255, 0.55), inset 1px 1px 2px rgba(255, 255, 255, 0.9), inset -1px -2px 3px rgba(28, 29, 26, 0.12);
+  -webkit-backdrop-filter: none; backdrop-filter: none;
+}
+/* refracting rim: the backdrop is blurred and brightened only near the edges of the lens */
+.app-a .pill-indicator::before, .app-a .pill-indicator.moving::before {
+  content: ""; display: block; position: absolute; inset: 0; border-radius: inherit; opacity: 1; padding: 0; filter: none; background: none;
+  -webkit-backdrop-filter: blur(3px) brightness(1.15) saturate(170%); backdrop-filter: blur(3px) brightness(1.15) saturate(170%);
+  -webkit-mask: radial-gradient(ellipse 60% 55% at 50% 50%, transparent 60%, #000 100%); mask: radial-gradient(ellipse 60% 55% at 50% 50%, transparent 60%, #000 100%);
+  -webkit-mask-composite: source-over; mask-composite: add;
+}
+.app-a .pill-indicator::after, .app-a .pill-indicator.moving::after {
+  inset: 0; opacity: 1;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.08) 45%, rgba(255, 255, 255, 0) 60%, rgba(255, 255, 255, 0.18) 100%);
+}
+.dark .app-a .pill-indicator::after { background: linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.02) 50%, rgba(255, 255, 255, 0.08) 100%); }
+.dark .app-a .pill-indicator { box-shadow: 0 10px 24px -12px #000, inset 0 0 0 1px rgba(255, 255, 255, 0.22), inset 1px 1px 2px rgba(255, 255, 255, 0.3); }
+/* the label under the lens looks magnified */
+.app-a .pill-tabs button > span, .app-a .pill-tabs button > svg, .app-a .pill-tabs button > em { transition: transform 0.45s var(--a-ease); }
+.app-a .pill-tabs button.active > span, .app-a .pill-tabs button.active > svg, .app-a .pill-tabs button.active > em { transform: scale(1.07); }
+.app-a .pill-tabs button.active { font-weight: 600; }
