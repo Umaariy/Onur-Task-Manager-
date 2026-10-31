@@ -923,3 +923,171 @@ body, .dark body {
 .dark .app-a .board-strip button { background: rgba(255, 255, 255, 0.07); }
 .app-a .board-strip button.active { background: var(--g-dark); }
 @media (min-width: 761px) { .app-a .board-strip { overflow: visible; flex-wrap: wrap; } }
+
+/* =====================================================================
+   v13 — task card sheet and column settings
+   ===================================================================== */
+.app-a .modal .modal-body { padding: 0; margin: 0; }
+.app-a .modal > header { padding: 14px 18px 12px 24px; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--a-muted); font-weight: 600; }
+.app-a .modal > header .icon-button { width: 36px; height: 36px; border-radius: 999px; background: var(--g-fill); border: 1px solid var(--g-line); }
+
+/* card sheet */
+.app-a .modal.card-sheet { width: min(980px, 100%); }
+.app-a .cs { display: flex; flex-direction: column; min-height: 0; }
+.app-a .cs-note { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin: 14px 24px 0; padding: 10px 14px; border-radius: 14px; background: var(--a-sand); color: var(--a-sand-ink); font-size: 13px; }
+.app-a .cs-note span { flex: 1; min-width: 200px; }
+.app-a .cs-chip { height: 30px; padding: 0 12px; border-radius: 999px; background: rgba(255, 255, 255, 0.7); font-weight: 600; font-size: 12.5px; }
+.app-a .cs-head { padding: 16px 24px 14px; display: flex; flex-direction: column; gap: 10px; border-bottom: 1px solid var(--a-line); }
+.app-a .cs-crumb { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.app-a .cs-col, .app-a .cs-flag { display: inline-flex; align-items: center; gap: 7px; height: 26px; padding: 0 11px; border-radius: 999px; background: var(--a-soft); font-size: 12.5px; font-weight: 500; color: var(--a-ink-soft); }
+.app-a .cs-col i { width: 8px; height: 8px; border-radius: 50%; }
+.app-a .cs-flag { background: var(--a-sand); color: var(--a-sand-ink); }
+.app-a .cs-title { width: 100%; border: 0; background: transparent; resize: none; overflow: hidden; padding: 4px 0; margin: 0; font: 500 28px/1.2 "Outfit", sans-serif; letter-spacing: -0.02em; color: var(--a-ink); border-radius: 10px; }
+.app-a .cs-title:focus { outline: 0; box-shadow: none; background: var(--a-soft); padding: 4px 10px; margin: 0 -10px; width: calc(100% + 20px); }
+.app-a .cs-actions { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.app-a .cs-gap { flex: 1; }
+.app-a .cs-act { display: inline-flex; align-items: center; gap: 7px; height: 34px; padding: 0 13px; border-radius: 999px; background: var(--a-soft); color: var(--a-ink-soft); font-size: 13px; font-weight: 500; transition: background 0.2s, color 0.2s; }
+.app-a .cs-act:hover:not(:disabled) { background: var(--a-line); color: var(--a-ink); }
+.app-a .cs-act.icon { width: 34px; padding: 0; justify-content: center; }
+.app-a .cs-act.danger { color: var(--a-red); }
+.app-a .cs-act.danger:hover:not(:disabled) { background: var(--a-red-soft); }
+
+.app-a .cs-grid { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 0; min-height: 0; overflow-y: auto; flex: 1; }
+.app-a .cs-main { padding: 18px 24px 24px; display: flex; flex-direction: column; gap: 22px; min-width: 0; }
+.app-a .cs-side { padding: 18px 20px 24px; display: flex; flex-direction: column; gap: 14px; border-left: 1px solid var(--a-line); background: rgba(242, 240, 233, 0.45); }
+.dark .app-a .cs-side { background: rgba(255, 255, 255, 0.02); }
+.app-a .cs-sec { display: flex; flex-direction: column; gap: 10px; }
+.app-a .cs-sec h3 { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--a-muted); margin: 0; }
+.app-a .cs-count { font-size: 12px; letter-spacing: 0; text-transform: none; font-weight: 600; padding: 1px 8px; border-radius: 999px; background: var(--a-soft); color: var(--a-ink-soft); }
+.app-a .cs-desc { width: 100%; min-height: 104px; border-radius: 16px; border: 1px solid var(--a-line); background: var(--a-card); padding: 12px 14px; font-size: 15px; line-height: 1.55; resize: vertical; }
+
+.app-a .cs-progress { height: 6px; border-radius: 999px; background: var(--a-soft); overflow: hidden; }
+.app-a .cs-progress i { display: block; height: 100%; border-radius: 999px; background: var(--a-green); transition: width 0.4s var(--a-ease); }
+.app-a .cs-checks { display: flex; flex-direction: column; gap: 4px; }
+.app-a .modal .cs-check { display: flex; flex-direction: row; align-items: center; gap: 12px; margin: 0; padding: 9px 10px; border-radius: 12px; color: var(--a-ink); font-size: 14.5px; background: none; transition: background 0.2s; }
+.app-a .modal .cs-check:hover { background: var(--a-soft); }
+.app-a .modal .cs-check span { flex: 1; transition: color 0.3s; }
+.app-a .modal .cs-check.done span { color: var(--a-muted); text-decoration: line-through; }
+.app-a .modal .cs-check button { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 999px; color: var(--a-muted); opacity: 0; transition: opacity 0.2s; }
+.app-a .modal .cs-check:hover button { opacity: 1; }
+.app-a .modal .cs-check button:hover { background: var(--a-line); color: var(--a-ink); }
+.app-a .cs-add { display: flex; align-items: center; gap: 10px; padding: 0 10px; color: var(--a-muted); }
+.app-a .cs-add input { flex: 1; border: 0; background: transparent; padding: 9px 0; border-radius: 0; border-bottom: 1px dashed var(--a-line); font-size: 14px; }
+.app-a .cs-add input:focus { outline: 0; box-shadow: none; border-bottom-color: var(--a-green); }
+
+.app-a .cs-files { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 8px; }
+.app-a .cs-file { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 14px; background: var(--a-card); border: 1px solid var(--a-line); text-align: left; color: var(--a-muted); transition: border-color 0.2s, background 0.2s; }
+.app-a .cs-file:hover:not(:disabled) { border-color: var(--a-line-strong, #d9d6cc); background: var(--a-soft); }
+.app-a .cs-file-ext { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; background: var(--a-red-soft); color: var(--a-red); font-size: 10.5px; font-weight: 700; flex: none; }
+.app-a .cs-file-name { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.app-a .cs-file-name strong { font-weight: 500; font-size: 13.5px; color: var(--a-ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.app-a .cs-file-name small, .app-a .cs-file.add small { font-size: 12px; color: var(--a-muted); display: block; }
+.app-a .cs-file.add { border-style: dashed; background: transparent; color: var(--a-ink-soft); font-weight: 500; font-size: 13.5px; }
+.app-a .cs-file.add svg { width: 38px; height: 38px; padding: 10px; border-radius: 10px; background: var(--a-soft); box-sizing: border-box; }
+
+.app-a .cs-comment-form { display: flex; gap: 10px; align-items: flex-start; }
+.app-a .cs-comment-form > div { flex: 1; display: flex; flex-direction: column; gap: 8px; align-items: flex-end; }
+.app-a .cs-comment-form textarea { width: 100%; border-radius: 14px; border: 1px solid var(--a-line); padding: 10px 14px; font-size: 14px; resize: vertical; }
+.app-a .cs-comments { display: flex; flex-direction: column; gap: 14px; }
+.app-a .cs-comment { display: flex; gap: 10px; }
+.app-a .cs-comment > div { flex: 1; min-width: 0; }
+.app-a .cs-comment-head { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+.app-a .cs-comment-head strong { font-size: 13.5px; font-weight: 600; }
+.app-a .cs-comment-head small { color: var(--a-muted); font-size: 12px; }
+.app-a .cs-comment-head button { margin-left: auto; width: 24px; height: 24px; border-radius: 999px; display: grid; place-items: center; color: var(--a-muted); opacity: 0; }
+.app-a .cs-comment:hover .cs-comment-head button { opacity: 1; }
+.app-a .cs-comment p { margin: 0; padding: 10px 14px; border-radius: 4px 16px 16px 16px; background: var(--a-soft); font-size: 14px; line-height: 1.5; white-space: pre-wrap; overflow-wrap: anywhere; }
+
+.app-a .cs-props { display: flex; flex-direction: column; gap: 14px; padding: 14px; border-radius: 18px; background: var(--a-card); border: 1px solid var(--a-line); }
+.app-a .cs-prop { display: flex; flex-direction: column; gap: 7px; }
+.app-a .cs-prop > span, .app-a .cs-prop label > span { font-size: 12px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--a-muted); }
+.app-a .cs-prop.two { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.app-a .cs-prop label { display: flex; flex-direction: column; gap: 7px; margin: 0; color: inherit; font-size: inherit; }
+.app-a .cs-prop input { width: 100%; height: 40px; border-radius: 12px; border: 1px solid var(--a-line); background: var(--a-soft); padding: 0 12px; font-size: 14px; }
+.app-a .cs-prop input:focus { background: #fff; }
+.app-a .cs-prop .styled-select-trigger { height: 40px; border-radius: 12px; }
+.app-a .cs-prio { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; }
+.app-a .cs-prio-btn { height: 34px; border-radius: 10px; font-size: 13px; font-weight: 500; background: var(--a-soft); color: var(--a-ink-soft); border: 1.5px solid transparent; transition: background 0.2s, border-color 0.2s, color 0.2s; }
+.app-a .cs-prio-btn.on.low { background: #e2eefb; color: #1d4c80; border-color: #8cb6e8; }
+.app-a .cs-prio-btn.on.medium { background: var(--a-soft); color: var(--a-ink); border-color: var(--a-ink-soft); }
+.app-a .cs-prio-btn.on.high { background: var(--a-sand); color: var(--a-sand-ink); border-color: #d9b45a; }
+.app-a .cs-prio-btn.on.urgent { background: var(--a-red-soft); color: var(--a-red); border-color: #e6907f; }
+.app-a .cs-people { display: flex; flex-direction: column; gap: 2px; max-height: 210px; overflow-y: auto; }
+.app-a .cs-person { display: flex; align-items: center; gap: 10px; padding: 6px 8px; border-radius: 12px; text-align: left; font-size: 13.5px; color: var(--a-ink-soft); }
+.app-a .cs-person > span:not(.avatar) { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.app-a .cs-person:hover:not(:disabled) { background: var(--a-soft); }
+.app-a .cs-person.on { background: var(--a-green-soft); color: var(--a-ink); font-weight: 500; }
+.app-a .cs-person.on svg { color: var(--a-green-text); }
+.app-a .cs-person .avatar { width: 28px; height: 28px; font-size: 11px; }
+.app-a .cs-tags { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.app-a .cs-tag { display: inline-flex; align-items: center; gap: 4px; height: 28px; padding: 0 6px 0 11px; border-radius: 999px; background: var(--a-green-soft); color: #145c30; font-size: 12.5px; font-weight: 500; }
+.dark .app-a .cs-tag { color: #9fe9b8; }
+.app-a .cs-tag button { width: 18px; height: 18px; border-radius: 999px; display: grid; place-items: center; }
+.app-a .cs-tag button:hover { background: rgba(0, 0, 0, 0.08); }
+.app-a .cs-tag-input { flex: 1; min-width: 90px; height: 28px !important; border: 1px dashed var(--a-line) !important; background: transparent !important; border-radius: 999px !important; padding: 0 11px !important; font-size: 12.5px !important; }
+
+.app-a .modal .cs-foot { display: flex; justify-content: flex-end; gap: 10px; padding: 14px 24px; margin: 0; border-top: 1px solid var(--a-line); background: var(--a-card); }
+
+@media (max-width: 860px) {
+  .app-a .cs-grid { grid-template-columns: 1fr; }
+  .app-a .cs-side { border-left: 0; border-top: 1px solid var(--a-line); order: -1; }
+  .app-a .cs-title { font-size: 22px; }
+  .app-a .cs-act span { display: none; }
+  .app-a .cs-act { width: 38px; padding: 0; justify-content: center; }
+  .app-a .cs-head, .app-a .cs-main { padding-left: 16px; padding-right: 16px; }
+  .app-a .cs-side { padding: 14px 16px; }
+  .app-a .modal .cs-foot { padding: 12px 16px calc(12px + env(safe-area-inset-bottom)); position: sticky; bottom: 0; }
+  .app-a .modal .cs-check button { opacity: 1; }
+}
+
+/* column settings */
+.app-a .modal:has(.colset) { width: min(560px, 100%); }
+.app-a .modal:has(.colset) .modal-body, .app-a .modal:has(.colset-actions) .modal-body { padding: 18px 22px 0; }
+.app-a .colset { display: flex; flex-direction: column; gap: 12px; }
+.app-a .colset-card { display: flex; flex-direction: column; gap: 14px; padding: 16px; border-radius: 18px; background: var(--a-card); border: 1px solid var(--a-line); }
+.app-a .colset-card h4 { margin: 0; font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--a-muted); }
+.app-a .modal .colset-field { display: flex; flex-direction: column; gap: 8px; margin: 0; color: inherit; font-size: inherit; }
+.app-a .colset-field > span { font-size: 13px; font-weight: 500; color: var(--a-ink-soft); }
+.app-a .colset-field input { height: 44px; border-radius: 12px; border: 1px solid var(--a-line); background: var(--a-soft); padding: 0 14px; font-size: 15px; }
+.app-a .colset-field input:focus { background: #fff; }
+.app-a .colset-field .styled-select-trigger { height: 44px; border-radius: 12px; }
+.app-a .colset-colors { display: flex; gap: 8px; flex-wrap: wrap; }
+.app-a .colset-colors button { width: 30px; height: 30px; border-radius: 50%; border: 2px solid transparent; box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.6); transition: transform 0.15s; }
+.app-a .colset-colors button:hover { transform: scale(1.08); }
+.app-a .colset-colors button.on { border-color: var(--a-ink); box-shadow: inset 0 0 0 3px #fff; }
+.app-a .modal .colset-row { display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 16px; margin: 0; color: inherit; font-size: inherit; position: relative; }
+.app-a .colset-row + .colset-row { padding-top: 14px; border-top: 1px solid var(--a-line); }
+.app-a .colset-row > div:first-child { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.app-a .colset-row strong { font-size: 14.5px; font-weight: 500; color: var(--a-ink); }
+.app-a .colset-row small { font-size: 12.5px; color: var(--a-muted); line-height: 1.4; }
+.app-a .colset-stepper { display: flex; align-items: center; border-radius: 12px; background: var(--a-soft); padding: 3px; flex: none; }
+.app-a .colset-stepper button { width: 34px; height: 34px; border-radius: 9px; font-size: 18px; color: var(--a-ink-soft); }
+.app-a .colset-stepper button:hover { background: #fff; }
+.app-a .colset-stepper input { width: 46px; height: 34px; border: 0; background: transparent; text-align: center; font-size: 15px; font-weight: 600; padding: 0; -moz-appearance: textfield; }
+.app-a .colset-stepper input::-webkit-inner-spin-button { -webkit-appearance: none; }
+.app-a .colset-row.toggle { cursor: pointer; }
+.app-a .colset-row.toggle input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.app-a .colset-switch { flex: none; width: 50px; height: 30px; border-radius: 999px; background: var(--a-line); position: relative; transition: background 0.25s; }
+.app-a .colset-switch::after { content: ""; position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; border-radius: 50%; background: #fff; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); transition: transform 0.25s var(--a-ease); }
+.app-a .colset-row.toggle input:checked + .colset-switch { background: var(--a-green); }
+.app-a .colset-row.toggle input:checked + .colset-switch::after { transform: translateX(20px); }
+.app-a .colset-row.toggle input:focus-visible + .colset-switch { outline: 2px solid rgba(28, 29, 26, 0.28); outline-offset: 2px; }
+.app-a .colset-actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin: 12px 0 0; padding: 14px 16px; border-radius: 18px; background: var(--a-card); border: 1px solid var(--a-line); }
+.app-a .colset-move { display: flex; align-items: center; gap: 12px; }
+.app-a .colset-move > span { font-size: 13px; color: var(--a-ink-soft); font-weight: 500; }
+.app-a .colset-seg { display: flex; padding: 3px; border-radius: 12px; background: var(--a-soft); gap: 2px; }
+.app-a .colset-seg button { display: inline-flex; align-items: center; gap: 4px; height: 32px; padding: 0 12px; border-radius: 9px; font-size: 13px; font-weight: 500; color: var(--a-ink-soft); }
+.app-a .colset-seg button:hover:not(:disabled) { background: #fff; color: var(--a-ink); }
+.app-a .colset-delete { display: inline-flex; align-items: center; gap: 7px; height: 36px; padding: 0 14px; border-radius: 999px; color: var(--a-red); font-weight: 500; font-size: 13.5px; }
+.app-a .colset-delete:hover { background: var(--a-red-soft); }
+.app-a .modal:has(.colset) footer { margin: 16px -22px 0; padding: 14px 22px; border-top: 1px solid var(--a-line); background: var(--a-card); }
+/* v13 fixes: sheet scrolls inside, footer always visible; tidy people list and date inputs */
+.app-a .modal.card-sheet .modal-body { overflow: hidden; display: flex; flex-direction: column; min-height: 0; flex: 1; }
+.app-a .modal.card-sheet .cs { flex: 1; min-height: 0; }
+.app-a .modal.card-sheet .cs-grid { overflow-y: auto; overscroll-behavior: contain; }
+.app-a .cs-person > span:not(.avatar) { flex: 1; }
+.app-a .cs-person > .avatar { flex: none; }
+.app-a .cs-person span.avatar { flex: 0 0 auto; }
+.app-a .cs-prop.two > label, .app-a .cs-prop input { min-width: 0; }
+.app-a .cs-prop input[type="date"] { padding: 0 8px; font-size: 13px; }
+.app-a .modal:has(.colset) footer { position: sticky; bottom: 0; z-index: 2; }
