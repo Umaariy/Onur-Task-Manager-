@@ -856,3 +856,14 @@ body, .dark body {
 .app-a .pill-indicator.moving::after { opacity: 1; }
 
 .app-a .search-pill input, .app-a .search-pill input:focus { padding: 0 6px; margin: 0 -6px; height: 100%; line-height: 44px; }
+
+/* ---------- v8: the lens looks the same at rest as while moving ---------- */
+.app-a .pill-indicator, .dark .app-a .pill-indicator, .app-a .pill-indicator.moving {
+  background: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 14px 30px -12px rgba(28, 29, 26, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.95), inset 0 -1px 0 rgba(255, 255, 255, 0.5), inset 0 0 0 1.5px rgba(255, 255, 255, 0.75), inset 0 0 16px rgba(255, 255, 255, 0.7);
+  -webkit-backdrop-filter: saturate(190%) brightness(1.06); backdrop-filter: saturate(190%) brightness(1.06);
+  transition: none;
+}
+.dark .app-a .pill-indicator, .dark .app-a .pill-indicator.moving { background: rgba(255, 255, 255, 0.12); box-shadow: 0 14px 30px -12px #000, inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 0 0 1.5px rgba(255, 255, 255, 0.2), inset 0 0 16px rgba(255, 255, 255, 0.18); }
+.app-a .pill-indicator::after, .app-a .pill-indicator.moving::after { opacity: 1; background: radial-gradient(110% 70% at 30% 0%, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0) 60%); }
+.dark .app-a .pill-indicator::after { opacity: 0.3; }
