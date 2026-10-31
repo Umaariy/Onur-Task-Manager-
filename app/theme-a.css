@@ -893,3 +893,16 @@ body, .dark body {
 .app-a .pill-tabs button > span, .app-a .pill-tabs button > svg, .app-a .pill-tabs button > em { transition: transform 0.45s var(--a-ease); }
 .app-a .pill-tabs button.active > span, .app-a .pill-tabs button.active > svg, .app-a .pill-tabs button.active > em { transform: scale(1.07); }
 .app-a .pill-tabs button.active { font-weight: 600; }
+
+/* ---------- v10: fully clear glass — no white fill, only a thin rim and edge refraction ---------- */
+.app-a .pill-indicator, .dark .app-a .pill-indicator, .app-a .pill-indicator.moving {
+  background: transparent;
+  box-shadow: 0 8px 20px -14px rgba(28, 29, 26, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.35), inset 0.5px 0.5px 1px rgba(255, 255, 255, 0.6), inset -0.5px -1px 1.5px rgba(28, 29, 26, 0.14);
+}
+.app-a .pill-indicator::before, .app-a .pill-indicator.moving::before {
+  -webkit-backdrop-filter: blur(2.5px) brightness(1.06) saturate(180%) contrast(1.05); backdrop-filter: blur(2.5px) brightness(1.06) saturate(180%) contrast(1.05);
+  -webkit-mask: radial-gradient(ellipse 62% 58% at 50% 50%, transparent 68%, #000 100%); mask: radial-gradient(ellipse 62% 58% at 50% 50%, transparent 68%, #000 100%);
+}
+.app-a .pill-indicator::after, .app-a .pill-indicator.moving::after { background: linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0) 38%, rgba(255, 255, 255, 0) 70%, rgba(255, 255, 255, 0.08) 100%); }
+.dark .app-a .pill-indicator, .dark .app-a .pill-indicator.moving { box-shadow: 0 8px 20px -14px #000, inset 0 0 0 1px rgba(255, 255, 255, 0.16), inset 0.5px 0.5px 1px rgba(255, 255, 255, 0.25); }
+.dark .app-a .pill-indicator::after { background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0) 40%); }
