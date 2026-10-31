@@ -906,3 +906,11 @@ body, .dark body {
 .app-a .pill-indicator::after, .app-a .pill-indicator.moving::after { background: linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0) 38%, rgba(255, 255, 255, 0) 70%, rgba(255, 255, 255, 0.08) 100%); }
 .dark .app-a .pill-indicator, .dark .app-a .pill-indicator.moving { box-shadow: 0 8px 20px -14px #000, inset 0 0 0 1px rgba(255, 255, 255, 0.16), inset 0.5px 0.5px 1px rgba(255, 255, 255, 0.25); }
 .dark .app-a .pill-indicator::after { background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0) 40%); }
+
+/* ---------- v11: quiet keyboard focus ring (replaces the bright green outline) ---------- */
+.app-a button:focus, .app-a a:focus { outline: none; }
+.app-a button:focus-visible, .app-a a:focus-visible, .app-a [role="button"]:focus-visible {
+  outline: 2px solid rgba(28, 29, 26, 0.28); outline-offset: 2px;
+}
+.dark .app-a button:focus-visible, .dark .app-a a:focus-visible, .dark .app-a [role="button"]:focus-visible { outline-color: rgba(255, 255, 255, 0.35); }
+.app-a .pill-tabs button:focus-visible, .app-a .board-strip button:focus-visible { outline-offset: -2px; }
